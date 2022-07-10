@@ -1,5 +1,8 @@
 <template>
-  <OrganismLocationFinder />
+  <div>
+    <OrganismFilterBar />
+    <OrganismLocationFinder />
+  </div>
 </template>
 
 <script>

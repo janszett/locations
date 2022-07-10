@@ -1,8 +1,8 @@
 <template>
   <div
-    class="organism-location-finder container"
+    class="organism-location-finder "
   >
-  <MoleculeTeaserWall :teasers="teasers"/>
+    <MoleculeTeaserWall :teasers="teasers" />
   </div>
 </template>
 
@@ -19,9 +19,13 @@ export default {
     this.teasers = await fetch(
       process.env.apiEndpointLocations
     ).then(res => res.json());
-
-    console.log(this.teasers);
   }
 
 };
 </script>
+
+<style lang="postcss" scoped>
+  .organism-location-finder {
+    margin-top: 4em;
+  }
+</style>

@@ -38,7 +38,7 @@ app.get('/locations', (req, res) => {
       address_line: location.address.address_line,
       postal_code: location.address.postal_code
     },
-    prices: location.prices,
+    price: location.prices[0] || null,
     max_seated: location.max_seated,
     max_standing: location.max_standing,
     min_pax: location.min_pax,

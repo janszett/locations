@@ -37,7 +37,9 @@ export default {
     '@nuxt/image',
     '@nuxtjs/google-fonts'
   ],
-  modules: [],
+  modules: [
+    '@nuxtjs/i18n'
+  ],
   build: {
     postcss: {
       plugins: {

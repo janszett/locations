@@ -4,7 +4,8 @@
         "es2021": true
     },
     "extends": [
-        "plugin:vue/vue3-essential",
+        "plugin:vue/recommended",
+        //"plugin:vue/vue3-essential",
         "standard"
     ],
     "parserOptions": {
@@ -18,7 +19,9 @@
       "semi": ["error", "always"],
       "vue/multi-word-component-names": ["error", {
         "ignores": ["default"]
-      }]
+      }],
+      "vue/no-v-html": "off",
+      "vue/prop-name-casing": "off"
 
 
     }

@@ -1,7 +1,8 @@
 <template>
-  <i class="atom-svg-icon" v-html="require(`@/assets/svg/${name}.svg?raw`)">
-
-  </i>
+  <i
+    class="atom-svg-icon"
+    v-html="require(`@/assets/svg/${name}.svg?raw`)"
+  />
 </template>
 
 <script>
@@ -20,7 +21,7 @@ export default {
     display: inline-flex;
     align-items: center;
 
-    & svg {
+    & >>> svg {
       display: block;
       width: 100%;
       height: auto;

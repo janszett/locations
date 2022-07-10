@@ -1,6 +1,10 @@
 <template>
   <article class="molecule-teaser-card">
-    <a :href="`https://www.eventlocations.com/de/venues/${slug}`"  target="_blank"  class="image-wrap relative z-1 mb-2 block overflow-hidden rounded">
+    <a
+      :href="`https://www.eventlocations.com/de/venues/${slug}`"
+      target="_blank"
+      class="image-wrap relative z-1 mb-2 block overflow-hidden rounded"
+    >
       <nuxt-img
         provider="imgix"
         :src="image.storage_name"
@@ -8,28 +12,45 @@
         fit="crop"
         :modifiers="{ auto: 'compress', crop: 'faces', ar: '5:3'}"
       />
+
+      <AtomTeaserCardPriceTag
+        :price="price"
+      />
+      <AtomTeaserCardFavoriteIcon @click.native="onClickFavorite" />
     </a>
     <section>
       <div class="flex justify-between">
-        <a class="text-lg font-semibold" :href="`https://www.eventlocations.com/de/venues/${slug}`" target="_blank" v-html="name"></a>
+        <a
+          class="text-lg font-semibold"
+          :href="`https://www.eventlocations.com/de/venues/${slug}`"
+          target="_blank"
+          v-html="name"
+        />
         <div class="z-2 ml-3">
-          <AtomSvgIcon v-if="virtual_tour_url" name="vr" class="vr-icon relative text-lightergray"></AtomSvgIcon>
+          <AtomSvgIcon
+            v-if="virtual_tour_url"
+            name="vr"
+            class="vr-icon relative text-lightergray"
+          />
         </div>
       </div>
-      <div class="text-xs location text-blue" v-if="address.address_line" v-html="address.address_line" />
+      <div
+        v-if="address.address_line"
+        class="text-xs location text-blue"
+        v-html="address.address_line"
+      />
 
-      <div class="mt-1 flex items-center" v-if="getLocationSizeLabel">
-        <AtomSvgIcon name="user" class="icon mr-2"></AtomSvgIcon>
-        <span class="text-xs text-lightergray" v-html="getLocationSizeLabel"></span>
-      </div>
-
-      <div class="mt-1 flex items-center">
-        <AtomSvgIcon name="catering" class="icon mr-2"></AtomSvgIcon>
-        <span class="text-xs text-lightergray" >Fester Partner</span>
-      </div>
-
+      <AtomTeaserCardFactWithIcon
+        v-if="getLocationSizeLabel"
+        icon-name="user"
+        :content="getLocationSizeLabel"
+      />
+      <AtomTeaserCardFactWithIcon
+        v-if="getCateringLabel"
+        icon-name="catering"
+        :content="getCateringLabel"
+      />
     </section>
-
   </article>
 </template>
 
@@ -68,14 +89,38 @@ export default {
     address: {
       type: Object,
       required: true
+    },
+    catering: {
+      type: Object,
+      required: true
+    },
+    price: {
+      type: Object,
+      default () {
+        return null;
+      }
     }
   },
   computed: {
+    getCateringLabel () {
+      if (!this.catering?.type) return null;
+      switch (this.catering.type) {
+        case 'free': return 'Catering frei';
+        case 'inhouse': return 'Hauseigenes Catering';
+      }
+
+      return 'Fester Partner';
+    },
     getLocationSizeLabel () {
       if (!this.min_pax || !this.max_seated) return null;
 
       const peopleCount = `${this.min_pax} - ${this.max_seated}`;
       return this.areas > 1 ? `${this.areas} Räume (${peopleCount})` : `${peopleCount}`;
+    }
+  },
+  methods: {
+    onClickFavorite (e) {
+      e.preventDefault();
     }
   }
 };
@@ -104,10 +149,18 @@ export default {
         transition: transform 350ms;
       }
 
+      & .atom-favorite-icon {
+        opacity: 0;
+      }
+
       &:hover {
         & img {
           transform: scale(1.1);
           transform-origin: 50% 50%;
+        }
+
+        & .atom-favorite-icon {
+          opacity: 1;
         }
       }
     }
