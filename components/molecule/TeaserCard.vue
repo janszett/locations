@@ -26,7 +26,7 @@
           target="_blank"
           v-html="name"
         />
-        <div class="z-2 ml-3">
+        <div class="ml-3">
           <AtomSvgIcon
             v-if="virtual_tour_url"
             name="vr"
